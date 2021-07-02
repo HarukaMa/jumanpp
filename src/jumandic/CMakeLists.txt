@@ -52,6 +52,12 @@ if (${JPP_USE_PROTOBUF})
   )
 endif ()
 
+find_package (Python3 COMPONENTS Development)
+add_library(jpp_jumandic_python SHARED python/jumanpp_py.cpp)
+add_dependencies(jpp_jumandic_python jpp_jumandic)
+set_target_properties(jpp_jumandic_python PROPERTIES OUTPUT_NAME jumanpp PREFIX "" SUFFIX .so LINKER_LANGUAGE C)
+target_include_directories(jpp_jumandic_python PRIVATE ${Python3_INCLUDE_DIRS})
+target_link_libraries(jpp_jumandic_python ${Python3_LIBRARIES} jpp_jumandic)
 
 jpp_test_executable(jpp_jumandic_tests ${jumandic_tests})
 jpp_test_executable(jpp_bug_tests ${bug_test_sources})
